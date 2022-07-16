@@ -12,18 +12,19 @@ function SalesCard() {
 
     const min = new Date(new Date().setDate(new Date().getDate() - 365));
     const max = new Date();
+
+
     const [minDate, setMinDate] = useState(min);
     const [maxDate, setMaxDate] = useState(max);
 
 
     const [sales, setSales] = useState<Sale[]>([])
 
-    const dMin = minDate.toISOString().slice(0, 10)
-    const dMax = maxDate.toISOString().slice(0, 10)
-
+    const DATE_MIN = minDate != null ? minDate.toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10)
+    const DATE_MAX = maxDate != null ? maxDate.toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10)
 
     useEffect(() => {
-        axios.get(`${BASE_URL}/sales?minDate=${dMin}&maxDate=${dMax}`).then(response => {
+        axios.get(`${BASE_URL}/sales?minDate=${DATE_MIN}&maxDate=${DATE_MAX}`).then(response => {
             setSales(response.data.content)
         })
     }, [minDate, maxDate])
